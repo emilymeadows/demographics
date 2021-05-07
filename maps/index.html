@@ -1,0 +1,2296 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <link rel="stylesheet" href="css/leaflet.css">
+        <link rel="stylesheet" href="css/qgis2web.css"><link rel="stylesheet" href="css/fontawesome-all.min.css">
+        <style>
+        html, body, #map {
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            margin: 0;
+        }
+        </style>
+        <title></title>
+    </head>
+    <body>
+        <div id="map">
+        </div>
+        <script src="js/qgis2web_expressions.js"></script>
+        <script src="js/leaflet.js"></script>
+        <script src="js/leaflet.rotatedMarker.js"></script>
+        <script src="js/leaflet.pattern.js"></script>
+        <script src="js/leaflet-hash.js"></script>
+        <script src="js/Autolinker.min.js"></script>
+        <script src="js/rbush.min.js"></script>
+        <script src="js/labelgun.min.js"></script>
+        <script src="js/labels.js"></script>
+        <script src="data/Utah_acs_data_final_1.js"></script>
+        <script src="data/Percent25_less_HS_diploma_2.js"></script>
+        <script src="data/Percent_less_English_prof_3.js"></script>
+        <script src="data/Percent_uninsured_4.js"></script>
+        <script src="data/Percent_unemployed_5.js"></script>
+        <script src="data/Percent_no_vehicle_6.js"></script>
+        <script src="data/Percent_owner_occupied_7.js"></script>
+        <script src="data/Percent_HH_12mo_sameunit_8.js"></script>
+        <script src="data/Med_Home_Value_9.js"></script>
+        <script src="data/Med_HH_income_10.js"></script>
+        <script src="data/Percent_Asian_11.js"></script>
+        <script src="data/Percent_Native_Am_12.js"></script>
+        <script src="data/Percent_Black_13.js"></script>
+        <script src="data/Percent_Hispanic_14.js"></script>
+        <script src="data/Percent_White_15.js"></script>
+        <script src="data/Pop_16.js"></script>
+        <script>
+        var map = L.map('map', {
+            zoomControl:true, maxZoom:28, minZoom:1
+        }).fitBounds([[31.616041703624187,-123.70672289911782],[48.473026104380274,-90.49630383531488]]);
+        var hash = new L.Hash(map);
+        map.attributionControl.setPrefix('<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a> &middot; <a href="https://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> &middot; <a href="https://qgis.org">QGIS</a>');
+        var autolinker = new Autolinker({truncate: {length: 30, location: 'smart'}});
+        var bounds_group = new L.featureGroup([]);
+        function setBounds() {
+        }
+        map.createPane('pane_Positronretina_0');
+        map.getPane('pane_Positronretina_0').style.zIndex = 400;
+        var layer_Positronretina_0 = L.tileLayer('http://a.basemaps.cartocdn.com/light_all/{z}/{x}/{y}@2x.png', {
+            pane: 'pane_Positronretina_0',
+            opacity: 1.0,
+            attribution: '<a href="https://cartodb.com/basemaps/">Map tiles by CartoDB, under CC BY 3.0. Data by OpenStreetMap, under ODbL.</a>',
+            minZoom: 1,
+            maxZoom: 28,
+            minNativeZoom: 0,
+            maxNativeZoom: 20
+        });
+        layer_Positronretina_0;
+        map.addLayer(layer_Positronretina_0);
+        function pop_Utah_acs_data_final_1(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['GEOID'] !== null ? autolinker.link(feature.properties['GEOID'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['pop'] !== null ? autolinker.link(feature.properties['pop'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['md_hhnc'] !== null ? autolinker.link(feature.properties['md_hhnc'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['per_wht'] !== null ? autolinker.link(feature.properties['per_wht'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['per_hsp'] !== null ? autolinker.link(feature.properties['per_hsp'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['pr_wnr_'] !== null ? autolinker.link(feature.properties['pr_wnr_'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['per_asn'] !== null ? autolinker.link(feature.properties['per_asn'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['pr_nVhc'] !== null ? autolinker.link(feature.properties['pr_nVhc'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['pr_nmpl'] !== null ? autolinker.link(feature.properties['pr_nmpl'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['pr_nnsr'] !== null ? autolinker.link(feature.properties['pr_nnsr'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['pr_sm_h'] !== null ? autolinker.link(feature.properties['pr_sm_h'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['home_vl'] !== null ? autolinker.link(feature.properties['home_vl'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['englsh_'] !== null ? autolinker.link(feature.properties['englsh_'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['pr_l_HS'] !== null ? autolinker.link(feature.properties['pr_l_HS'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['pr_blck'] !== null ? autolinker.link(feature.properties['pr_blck'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['per_NA'] !== null ? autolinker.link(feature.properties['per_NA'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_Utah_acs_data_final_1_0() {
+            return {
+                pane: 'pane_Utah_acs_data_final_1',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(213,180,60,1.0)',
+                interactive: false,
+            }
+        }
+        map.createPane('pane_Utah_acs_data_final_1');
+        map.getPane('pane_Utah_acs_data_final_1').style.zIndex = 401;
+        map.getPane('pane_Utah_acs_data_final_1').style['mix-blend-mode'] = 'normal';
+        var layer_Utah_acs_data_final_1 = new L.geoJson(json_Utah_acs_data_final_1, {
+            attribution: '',
+            interactive: false,
+            dataVar: 'json_Utah_acs_data_final_1',
+            layerName: 'layer_Utah_acs_data_final_1',
+            pane: 'pane_Utah_acs_data_final_1',
+            onEachFeature: pop_Utah_acs_data_final_1,
+            style: style_Utah_acs_data_final_1_0,
+        });
+        bounds_group.addLayer(layer_Utah_acs_data_final_1);
+        map.addLayer(layer_Utah_acs_data_final_1);
+        function pop_Percent25_less_HS_diploma_2(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['pop'] !== null ? autolinker.link(feature.properties['pop'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['md_HH_inc'] !== null ? autolinker.link(feature.properties['md_HH_inc'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['per_wht'] !== null ? autolinker.link(feature.properties['per_wht'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['per_hsp'] !== null ? autolinker.link(feature.properties['per_hsp'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['per_own_oc'] !== null ? autolinker.link(feature.properties['per_own_oc'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['per_asian'] !== null ? autolinker.link(feature.properties['per_asian'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['per_no_Veh'] !== null ? autolinker.link(feature.properties['per_no_Veh'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['per_unempl'] !== null ? autolinker.link(feature.properties['per_unempl'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['per_uninsu'] !== null ? autolinker.link(feature.properties['per_uninsu'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['per_same_u'] !== null ? autolinker.link(feature.properties['per_same_u'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['home_val'] !== null ? autolinker.link(feature.properties['home_val'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['per_less_e'] !== null ? autolinker.link(feature.properties['per_less_e'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['per_less_H'] !== null ? autolinker.link(feature.properties['per_less_H'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['per_blck'] !== null ? autolinker.link(feature.properties['per_blck'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['per_NatAm'] !== null ? autolinker.link(feature.properties['per_NatAm'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_Percent25_less_HS_diploma_2_0(feature) {
+            if (feature.properties['per_less_H'] >= 0.000000 && feature.properties['per_less_H'] <= 0.031522 ) {
+                return {
+                pane: 'pane_Percent25_less_HS_diploma_2',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(166,97,26,1.0)',
+                interactive: false,
+            }
+            }
+            if (feature.properties['per_less_H'] >= 0.031522 && feature.properties['per_less_H'] <= 0.066213 ) {
+                return {
+                pane: 'pane_Percent25_less_HS_diploma_2',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(223,194,125,1.0)',
+                interactive: false,
+            }
+            }
+            if (feature.properties['per_less_H'] >= 0.066213 && feature.properties['per_less_H'] <= 0.118473 ) {
+                return {
+                pane: 'pane_Percent25_less_HS_diploma_2',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(245,245,245,1.0)',
+                interactive: false,
+            }
+            }
+            if (feature.properties['per_less_H'] >= 0.118473 && feature.properties['per_less_H'] <= 0.265243 ) {
+                return {
+                pane: 'pane_Percent25_less_HS_diploma_2',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(128,205,193,1.0)',
+                interactive: false,
+            }
+            }
+            if (feature.properties['per_less_H'] >= 0.265243 && feature.properties['per_less_H'] <= 0.626168 ) {
+                return {
+                pane: 'pane_Percent25_less_HS_diploma_2',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(1,133,113,1.0)',
+                interactive: false,
+            }
+            }
+        }
+        map.createPane('pane_Percent25_less_HS_diploma_2');
+        map.getPane('pane_Percent25_less_HS_diploma_2').style.zIndex = 402;
+        map.getPane('pane_Percent25_less_HS_diploma_2').style['mix-blend-mode'] = 'normal';
+        var layer_Percent25_less_HS_diploma_2 = new L.geoJson(json_Percent25_less_HS_diploma_2, {
+            attribution: '',
+            interactive: false,
+            dataVar: 'json_Percent25_less_HS_diploma_2',
+            layerName: 'layer_Percent25_less_HS_diploma_2',
+            pane: 'pane_Percent25_less_HS_diploma_2',
+            onEachFeature: pop_Percent25_less_HS_diploma_2,
+            style: style_Percent25_less_HS_diploma_2_0,
+        });
+        bounds_group.addLayer(layer_Percent25_less_HS_diploma_2);
+        map.addLayer(layer_Percent25_less_HS_diploma_2);
+        function pop_Percent_less_English_prof_3(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['pop'] !== null ? autolinker.link(feature.properties['pop'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['md_HH_inc'] !== null ? autolinker.link(feature.properties['md_HH_inc'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['per_wht'] !== null ? autolinker.link(feature.properties['per_wht'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['per_hsp'] !== null ? autolinker.link(feature.properties['per_hsp'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['per_own_oc'] !== null ? autolinker.link(feature.properties['per_own_oc'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['per_asian'] !== null ? autolinker.link(feature.properties['per_asian'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['per_no_Veh'] !== null ? autolinker.link(feature.properties['per_no_Veh'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['per_unempl'] !== null ? autolinker.link(feature.properties['per_unempl'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['per_uninsu'] !== null ? autolinker.link(feature.properties['per_uninsu'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['per_same_u'] !== null ? autolinker.link(feature.properties['per_same_u'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['home_val'] !== null ? autolinker.link(feature.properties['home_val'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['per_less_e'] !== null ? autolinker.link(feature.properties['per_less_e'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['per_less_H'] !== null ? autolinker.link(feature.properties['per_less_H'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['per_blck'] !== null ? autolinker.link(feature.properties['per_blck'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['per_NatAm'] !== null ? autolinker.link(feature.properties['per_NatAm'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_Percent_less_English_prof_3_0(feature) {
+            if (feature.properties['per_less_e'] >= 0.000000 && feature.properties['per_less_e'] <= 0.018669 ) {
+                return {
+                pane: 'pane_Percent_less_English_prof_3',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(166,97,26,1.0)',
+                interactive: false,
+            }
+            }
+            if (feature.properties['per_less_e'] >= 0.018669 && feature.properties['per_less_e'] <= 0.046105 ) {
+                return {
+                pane: 'pane_Percent_less_English_prof_3',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(223,194,125,1.0)',
+                interactive: false,
+            }
+            }
+            if (feature.properties['per_less_e'] >= 0.046105 && feature.properties['per_less_e'] <= 0.086765 ) {
+                return {
+                pane: 'pane_Percent_less_English_prof_3',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(245,245,245,1.0)',
+                interactive: false,
+            }
+            }
+            if (feature.properties['per_less_e'] >= 0.086765 && feature.properties['per_less_e'] <= 0.149491 ) {
+                return {
+                pane: 'pane_Percent_less_English_prof_3',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(128,205,193,1.0)',
+                interactive: false,
+            }
+            }
+            if (feature.properties['per_less_e'] >= 0.149491 && feature.properties['per_less_e'] <= 0.269248 ) {
+                return {
+                pane: 'pane_Percent_less_English_prof_3',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(1,133,113,1.0)',
+                interactive: false,
+            }
+            }
+        }
+        map.createPane('pane_Percent_less_English_prof_3');
+        map.getPane('pane_Percent_less_English_prof_3').style.zIndex = 403;
+        map.getPane('pane_Percent_less_English_prof_3').style['mix-blend-mode'] = 'normal';
+        var layer_Percent_less_English_prof_3 = new L.geoJson(json_Percent_less_English_prof_3, {
+            attribution: '',
+            interactive: false,
+            dataVar: 'json_Percent_less_English_prof_3',
+            layerName: 'layer_Percent_less_English_prof_3',
+            pane: 'pane_Percent_less_English_prof_3',
+            onEachFeature: pop_Percent_less_English_prof_3,
+            style: style_Percent_less_English_prof_3_0,
+        });
+        bounds_group.addLayer(layer_Percent_less_English_prof_3);
+        map.addLayer(layer_Percent_less_English_prof_3);
+        function pop_Percent_uninsured_4(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['pop'] !== null ? autolinker.link(feature.properties['pop'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['md_HH_inc'] !== null ? autolinker.link(feature.properties['md_HH_inc'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['per_wht'] !== null ? autolinker.link(feature.properties['per_wht'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['per_hsp'] !== null ? autolinker.link(feature.properties['per_hsp'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['per_own_oc'] !== null ? autolinker.link(feature.properties['per_own_oc'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['per_asian'] !== null ? autolinker.link(feature.properties['per_asian'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['per_no_Veh'] !== null ? autolinker.link(feature.properties['per_no_Veh'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['per_unempl'] !== null ? autolinker.link(feature.properties['per_unempl'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['per_uninsu'] !== null ? autolinker.link(feature.properties['per_uninsu'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['per_same_u'] !== null ? autolinker.link(feature.properties['per_same_u'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['home_val'] !== null ? autolinker.link(feature.properties['home_val'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['per_less_e'] !== null ? autolinker.link(feature.properties['per_less_e'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['per_less_H'] !== null ? autolinker.link(feature.properties['per_less_H'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['per_blck'] !== null ? autolinker.link(feature.properties['per_blck'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['per_NatAm'] !== null ? autolinker.link(feature.properties['per_NatAm'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_Percent_uninsured_4_0(feature) {
+            if (feature.properties['per_uninsu'] >= 0.000000 && feature.properties['per_uninsu'] <= 0.003378 ) {
+                return {
+                pane: 'pane_Percent_uninsured_4',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(166,97,26,1.0)',
+                interactive: false,
+            }
+            }
+            if (feature.properties['per_uninsu'] >= 0.003378 && feature.properties['per_uninsu'] <= 0.008588 ) {
+                return {
+                pane: 'pane_Percent_uninsured_4',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(223,194,125,1.0)',
+                interactive: false,
+            }
+            }
+            if (feature.properties['per_uninsu'] >= 0.008588 && feature.properties['per_uninsu'] <= 0.014899 ) {
+                return {
+                pane: 'pane_Percent_uninsured_4',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(245,245,245,1.0)',
+                interactive: false,
+            }
+            }
+            if (feature.properties['per_uninsu'] >= 0.014899 && feature.properties['per_uninsu'] <= 0.024584 ) {
+                return {
+                pane: 'pane_Percent_uninsured_4',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(128,205,193,1.0)',
+                interactive: false,
+            }
+            }
+            if (feature.properties['per_uninsu'] >= 0.024584 && feature.properties['per_uninsu'] <= 0.052827 ) {
+                return {
+                pane: 'pane_Percent_uninsured_4',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(1,133,113,1.0)',
+                interactive: false,
+            }
+            }
+        }
+        map.createPane('pane_Percent_uninsured_4');
+        map.getPane('pane_Percent_uninsured_4').style.zIndex = 404;
+        map.getPane('pane_Percent_uninsured_4').style['mix-blend-mode'] = 'normal';
+        var layer_Percent_uninsured_4 = new L.geoJson(json_Percent_uninsured_4, {
+            attribution: '',
+            interactive: false,
+            dataVar: 'json_Percent_uninsured_4',
+            layerName: 'layer_Percent_uninsured_4',
+            pane: 'pane_Percent_uninsured_4',
+            onEachFeature: pop_Percent_uninsured_4,
+            style: style_Percent_uninsured_4_0,
+        });
+        bounds_group.addLayer(layer_Percent_uninsured_4);
+        map.addLayer(layer_Percent_uninsured_4);
+        function pop_Percent_unemployed_5(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['pop'] !== null ? autolinker.link(feature.properties['pop'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['md_HH_inc'] !== null ? autolinker.link(feature.properties['md_HH_inc'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['per_wht'] !== null ? autolinker.link(feature.properties['per_wht'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['per_hsp'] !== null ? autolinker.link(feature.properties['per_hsp'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['per_own_oc'] !== null ? autolinker.link(feature.properties['per_own_oc'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['per_asian'] !== null ? autolinker.link(feature.properties['per_asian'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['per_no_Veh'] !== null ? autolinker.link(feature.properties['per_no_Veh'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['per_unempl'] !== null ? autolinker.link(feature.properties['per_unempl'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['per_uninsu'] !== null ? autolinker.link(feature.properties['per_uninsu'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['per_same_u'] !== null ? autolinker.link(feature.properties['per_same_u'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['home_val'] !== null ? autolinker.link(feature.properties['home_val'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['per_less_e'] !== null ? autolinker.link(feature.properties['per_less_e'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['per_less_H'] !== null ? autolinker.link(feature.properties['per_less_H'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['per_blck'] !== null ? autolinker.link(feature.properties['per_blck'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['per_NatAm'] !== null ? autolinker.link(feature.properties['per_NatAm'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_Percent_unemployed_5_0(feature) {
+            if (feature.properties['per_unempl'] >= 0.000000 && feature.properties['per_unempl'] <= 0.013556 ) {
+                return {
+                pane: 'pane_Percent_unemployed_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(166,97,26,1.0)',
+                interactive: false,
+            }
+            }
+            if (feature.properties['per_unempl'] >= 0.013556 && feature.properties['per_unempl'] <= 0.023531 ) {
+                return {
+                pane: 'pane_Percent_unemployed_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(223,194,125,1.0)',
+                interactive: false,
+            }
+            }
+            if (feature.properties['per_unempl'] >= 0.023531 && feature.properties['per_unempl'] <= 0.035449 ) {
+                return {
+                pane: 'pane_Percent_unemployed_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(245,245,245,1.0)',
+                interactive: false,
+            }
+            }
+            if (feature.properties['per_unempl'] >= 0.035449 && feature.properties['per_unempl'] <= 0.061741 ) {
+                return {
+                pane: 'pane_Percent_unemployed_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(128,205,193,1.0)',
+                interactive: false,
+            }
+            }
+            if (feature.properties['per_unempl'] >= 0.061741 && feature.properties['per_unempl'] <= 0.100383 ) {
+                return {
+                pane: 'pane_Percent_unemployed_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(1,133,113,1.0)',
+                interactive: false,
+            }
+            }
+        }
+        map.createPane('pane_Percent_unemployed_5');
+        map.getPane('pane_Percent_unemployed_5').style.zIndex = 405;
+        map.getPane('pane_Percent_unemployed_5').style['mix-blend-mode'] = 'normal';
+        var layer_Percent_unemployed_5 = new L.geoJson(json_Percent_unemployed_5, {
+            attribution: '',
+            interactive: false,
+            dataVar: 'json_Percent_unemployed_5',
+            layerName: 'layer_Percent_unemployed_5',
+            pane: 'pane_Percent_unemployed_5',
+            onEachFeature: pop_Percent_unemployed_5,
+            style: style_Percent_unemployed_5_0,
+        });
+        bounds_group.addLayer(layer_Percent_unemployed_5);
+        map.addLayer(layer_Percent_unemployed_5);
+        function pop_Percent_no_vehicle_6(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['pop'] !== null ? autolinker.link(feature.properties['pop'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['md_HH_inc'] !== null ? autolinker.link(feature.properties['md_HH_inc'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['per_wht'] !== null ? autolinker.link(feature.properties['per_wht'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['per_hsp'] !== null ? autolinker.link(feature.properties['per_hsp'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['per_own_oc'] !== null ? autolinker.link(feature.properties['per_own_oc'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['per_asian'] !== null ? autolinker.link(feature.properties['per_asian'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['per_no_Veh'] !== null ? autolinker.link(feature.properties['per_no_Veh'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['per_unempl'] !== null ? autolinker.link(feature.properties['per_unempl'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['per_uninsu'] !== null ? autolinker.link(feature.properties['per_uninsu'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['per_same_u'] !== null ? autolinker.link(feature.properties['per_same_u'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['home_val'] !== null ? autolinker.link(feature.properties['home_val'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['per_less_e'] !== null ? autolinker.link(feature.properties['per_less_e'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['per_less_H'] !== null ? autolinker.link(feature.properties['per_less_H'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['per_blck'] !== null ? autolinker.link(feature.properties['per_blck'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['per_NatAm'] !== null ? autolinker.link(feature.properties['per_NatAm'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_Percent_no_vehicle_6_0(feature) {
+            if (feature.properties['per_no_Veh'] >= 0.000000 && feature.properties['per_no_Veh'] <= 0.011650 ) {
+                return {
+                pane: 'pane_Percent_no_vehicle_6',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(166,97,26,1.0)',
+                interactive: false,
+            }
+            }
+            if (feature.properties['per_no_Veh'] >= 0.011650 && feature.properties['per_no_Veh'] <= 0.028670 ) {
+                return {
+                pane: 'pane_Percent_no_vehicle_6',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(223,194,125,1.0)',
+                interactive: false,
+            }
+            }
+            if (feature.properties['per_no_Veh'] >= 0.028670 && feature.properties['per_no_Veh'] <= 0.056669 ) {
+                return {
+                pane: 'pane_Percent_no_vehicle_6',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(245,245,245,1.0)',
+                interactive: false,
+            }
+            }
+            if (feature.properties['per_no_Veh'] >= 0.056669 && feature.properties['per_no_Veh'] <= 0.116001 ) {
+                return {
+                pane: 'pane_Percent_no_vehicle_6',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(128,205,193,1.0)',
+                interactive: false,
+            }
+            }
+            if (feature.properties['per_no_Veh'] >= 0.116001 && feature.properties['per_no_Veh'] <= 0.225888 ) {
+                return {
+                pane: 'pane_Percent_no_vehicle_6',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(1,133,113,1.0)',
+                interactive: false,
+            }
+            }
+        }
+        map.createPane('pane_Percent_no_vehicle_6');
+        map.getPane('pane_Percent_no_vehicle_6').style.zIndex = 406;
+        map.getPane('pane_Percent_no_vehicle_6').style['mix-blend-mode'] = 'normal';
+        var layer_Percent_no_vehicle_6 = new L.geoJson(json_Percent_no_vehicle_6, {
+            attribution: '',
+            interactive: false,
+            dataVar: 'json_Percent_no_vehicle_6',
+            layerName: 'layer_Percent_no_vehicle_6',
+            pane: 'pane_Percent_no_vehicle_6',
+            onEachFeature: pop_Percent_no_vehicle_6,
+            style: style_Percent_no_vehicle_6_0,
+        });
+        bounds_group.addLayer(layer_Percent_no_vehicle_6);
+        map.addLayer(layer_Percent_no_vehicle_6);
+        function pop_Percent_owner_occupied_7(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['pop'] !== null ? autolinker.link(feature.properties['pop'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['md_HH_inc'] !== null ? autolinker.link(feature.properties['md_HH_inc'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['per_wht'] !== null ? autolinker.link(feature.properties['per_wht'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['per_hsp'] !== null ? autolinker.link(feature.properties['per_hsp'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['per_own_oc'] !== null ? autolinker.link(feature.properties['per_own_oc'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['per_asian'] !== null ? autolinker.link(feature.properties['per_asian'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['per_no_Veh'] !== null ? autolinker.link(feature.properties['per_no_Veh'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['per_unempl'] !== null ? autolinker.link(feature.properties['per_unempl'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['per_uninsu'] !== null ? autolinker.link(feature.properties['per_uninsu'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['per_same_u'] !== null ? autolinker.link(feature.properties['per_same_u'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['home_val'] !== null ? autolinker.link(feature.properties['home_val'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['per_less_e'] !== null ? autolinker.link(feature.properties['per_less_e'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['per_less_H'] !== null ? autolinker.link(feature.properties['per_less_H'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['per_blck'] !== null ? autolinker.link(feature.properties['per_blck'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['per_NatAm'] !== null ? autolinker.link(feature.properties['per_NatAm'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_Percent_owner_occupied_7_0(feature) {
+            if (feature.properties['per_own_oc'] >= 0.000000 && feature.properties['per_own_oc'] <= 0.257047 ) {
+                return {
+                pane: 'pane_Percent_owner_occupied_7',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(166,97,26,1.0)',
+                interactive: false,
+            }
+            }
+            if (feature.properties['per_own_oc'] >= 0.257047 && feature.properties['per_own_oc'] <= 0.476722 ) {
+                return {
+                pane: 'pane_Percent_owner_occupied_7',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(223,194,125,1.0)',
+                interactive: false,
+            }
+            }
+            if (feature.properties['per_own_oc'] >= 0.476722 && feature.properties['per_own_oc'] <= 0.661131 ) {
+                return {
+                pane: 'pane_Percent_owner_occupied_7',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(245,245,245,1.0)',
+                interactive: false,
+            }
+            }
+            if (feature.properties['per_own_oc'] >= 0.661131 && feature.properties['per_own_oc'] <= 0.809585 ) {
+                return {
+                pane: 'pane_Percent_owner_occupied_7',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(128,205,193,1.0)',
+                interactive: false,
+            }
+            }
+            if (feature.properties['per_own_oc'] >= 0.809585 && feature.properties['per_own_oc'] <= 0.973598 ) {
+                return {
+                pane: 'pane_Percent_owner_occupied_7',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(1,133,113,1.0)',
+                interactive: false,
+            }
+            }
+        }
+        map.createPane('pane_Percent_owner_occupied_7');
+        map.getPane('pane_Percent_owner_occupied_7').style.zIndex = 407;
+        map.getPane('pane_Percent_owner_occupied_7').style['mix-blend-mode'] = 'normal';
+        var layer_Percent_owner_occupied_7 = new L.geoJson(json_Percent_owner_occupied_7, {
+            attribution: '',
+            interactive: false,
+            dataVar: 'json_Percent_owner_occupied_7',
+            layerName: 'layer_Percent_owner_occupied_7',
+            pane: 'pane_Percent_owner_occupied_7',
+            onEachFeature: pop_Percent_owner_occupied_7,
+            style: style_Percent_owner_occupied_7_0,
+        });
+        bounds_group.addLayer(layer_Percent_owner_occupied_7);
+        map.addLayer(layer_Percent_owner_occupied_7);
+        function pop_Percent_HH_12mo_sameunit_8(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['GEOID'] !== null ? autolinker.link(feature.properties['GEOID'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['pop'] !== null ? autolinker.link(feature.properties['pop'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['md_hhnc'] !== null ? autolinker.link(feature.properties['md_hhnc'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['per_wht'] !== null ? autolinker.link(feature.properties['per_wht'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['per_hsp'] !== null ? autolinker.link(feature.properties['per_hsp'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['pr_wnr_'] !== null ? autolinker.link(feature.properties['pr_wnr_'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['per_asn'] !== null ? autolinker.link(feature.properties['per_asn'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['pr_nVhc'] !== null ? autolinker.link(feature.properties['pr_nVhc'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['pr_nmpl'] !== null ? autolinker.link(feature.properties['pr_nmpl'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['pr_nnsr'] !== null ? autolinker.link(feature.properties['pr_nnsr'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['pr_sm_h'] !== null ? autolinker.link(feature.properties['pr_sm_h'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['home_vl'] !== null ? autolinker.link(feature.properties['home_vl'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['englsh_'] !== null ? autolinker.link(feature.properties['englsh_'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['pr_l_HS'] !== null ? autolinker.link(feature.properties['pr_l_HS'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['pr_blck'] !== null ? autolinker.link(feature.properties['pr_blck'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['per_NA'] !== null ? autolinker.link(feature.properties['per_NA'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_Percent_HH_12mo_sameunit_8_0(feature) {
+            if (feature.properties['pr_sm_h'] >= 0.214204 && feature.properties['pr_sm_h'] <= 0.335012 ) {
+                return {
+                pane: 'pane_Percent_HH_12mo_sameunit_8',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(166,97,26,1.0)',
+                interactive: false,
+            }
+            }
+            if (feature.properties['pr_sm_h'] >= 0.335012 && feature.properties['pr_sm_h'] <= 0.643049 ) {
+                return {
+                pane: 'pane_Percent_HH_12mo_sameunit_8',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(223,194,125,1.0)',
+                interactive: false,
+            }
+            }
+            if (feature.properties['pr_sm_h'] >= 0.643049 && feature.properties['pr_sm_h'] <= 0.774311 ) {
+                return {
+                pane: 'pane_Percent_HH_12mo_sameunit_8',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(245,245,245,1.0)',
+                interactive: false,
+            }
+            }
+            if (feature.properties['pr_sm_h'] >= 0.774311 && feature.properties['pr_sm_h'] <= 0.856778 ) {
+                return {
+                pane: 'pane_Percent_HH_12mo_sameunit_8',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(128,205,193,1.0)',
+                interactive: false,
+            }
+            }
+            if (feature.properties['pr_sm_h'] >= 0.856778 && feature.properties['pr_sm_h'] <= 1.000000 ) {
+                return {
+                pane: 'pane_Percent_HH_12mo_sameunit_8',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(1,133,113,1.0)',
+                interactive: false,
+            }
+            }
+        }
+        map.createPane('pane_Percent_HH_12mo_sameunit_8');
+        map.getPane('pane_Percent_HH_12mo_sameunit_8').style.zIndex = 408;
+        map.getPane('pane_Percent_HH_12mo_sameunit_8').style['mix-blend-mode'] = 'normal';
+        var layer_Percent_HH_12mo_sameunit_8 = new L.geoJson(json_Percent_HH_12mo_sameunit_8, {
+            attribution: '',
+            interactive: false,
+            dataVar: 'json_Percent_HH_12mo_sameunit_8',
+            layerName: 'layer_Percent_HH_12mo_sameunit_8',
+            pane: 'pane_Percent_HH_12mo_sameunit_8',
+            onEachFeature: pop_Percent_HH_12mo_sameunit_8,
+            style: style_Percent_HH_12mo_sameunit_8_0,
+        });
+        bounds_group.addLayer(layer_Percent_HH_12mo_sameunit_8);
+        map.addLayer(layer_Percent_HH_12mo_sameunit_8);
+        function pop_Med_Home_Value_9(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['pop'] !== null ? autolinker.link(feature.properties['pop'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['md_HH_inc'] !== null ? autolinker.link(feature.properties['md_HH_inc'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['per_wht'] !== null ? autolinker.link(feature.properties['per_wht'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['per_hsp'] !== null ? autolinker.link(feature.properties['per_hsp'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['per_own_oc'] !== null ? autolinker.link(feature.properties['per_own_oc'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['per_asian'] !== null ? autolinker.link(feature.properties['per_asian'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['per_no_Veh'] !== null ? autolinker.link(feature.properties['per_no_Veh'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['per_unempl'] !== null ? autolinker.link(feature.properties['per_unempl'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['per_uninsu'] !== null ? autolinker.link(feature.properties['per_uninsu'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['per_same_u'] !== null ? autolinker.link(feature.properties['per_same_u'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['home_val'] !== null ? autolinker.link(feature.properties['home_val'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['per_less_e'] !== null ? autolinker.link(feature.properties['per_less_e'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['per_less_H'] !== null ? autolinker.link(feature.properties['per_less_H'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['per_blck'] !== null ? autolinker.link(feature.properties['per_blck'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['per_NatAm'] !== null ? autolinker.link(feature.properties['per_NatAm'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_Med_Home_Value_9_0(feature) {
+            if (feature.properties['home_val'] >= 35600.000000 && feature.properties['home_val'] <= 216500.000000 ) {
+                return {
+                pane: 'pane_Med_Home_Value_9',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(166,97,26,1.0)',
+                interactive: false,
+            }
+            }
+            if (feature.properties['home_val'] >= 216500.000000 && feature.properties['home_val'] <= 316300.000000 ) {
+                return {
+                pane: 'pane_Med_Home_Value_9',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(223,194,125,1.0)',
+                interactive: false,
+            }
+            }
+            if (feature.properties['home_val'] >= 316300.000000 && feature.properties['home_val'] <= 483000.000000 ) {
+                return {
+                pane: 'pane_Med_Home_Value_9',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(245,245,245,1.0)',
+                interactive: false,
+            }
+            }
+            if (feature.properties['home_val'] >= 483000.000000 && feature.properties['home_val'] <= 822500.000000 ) {
+                return {
+                pane: 'pane_Med_Home_Value_9',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(128,205,193,1.0)',
+                interactive: false,
+            }
+            }
+            if (feature.properties['home_val'] >= 822500.000000 && feature.properties['home_val'] <= 1561400.000000 ) {
+                return {
+                pane: 'pane_Med_Home_Value_9',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(1,133,113,1.0)',
+                interactive: false,
+            }
+            }
+        }
+        map.createPane('pane_Med_Home_Value_9');
+        map.getPane('pane_Med_Home_Value_9').style.zIndex = 409;
+        map.getPane('pane_Med_Home_Value_9').style['mix-blend-mode'] = 'normal';
+        var layer_Med_Home_Value_9 = new L.geoJson(json_Med_Home_Value_9, {
+            attribution: '',
+            interactive: false,
+            dataVar: 'json_Med_Home_Value_9',
+            layerName: 'layer_Med_Home_Value_9',
+            pane: 'pane_Med_Home_Value_9',
+            onEachFeature: pop_Med_Home_Value_9,
+            style: style_Med_Home_Value_9_0,
+        });
+        bounds_group.addLayer(layer_Med_Home_Value_9);
+        map.addLayer(layer_Med_Home_Value_9);
+        function pop_Med_HH_income_10(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['GEOID'] !== null ? autolinker.link(feature.properties['GEOID'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['pop'] !== null ? autolinker.link(feature.properties['pop'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['md_hhnc'] !== null ? autolinker.link(feature.properties['md_hhnc'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['per_wht'] !== null ? autolinker.link(feature.properties['per_wht'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['per_hsp'] !== null ? autolinker.link(feature.properties['per_hsp'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['pr_wnr_'] !== null ? autolinker.link(feature.properties['pr_wnr_'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['per_asn'] !== null ? autolinker.link(feature.properties['per_asn'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['pr_nVhc'] !== null ? autolinker.link(feature.properties['pr_nVhc'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['pr_nmpl'] !== null ? autolinker.link(feature.properties['pr_nmpl'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['pr_nnsr'] !== null ? autolinker.link(feature.properties['pr_nnsr'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['pr_sm_h'] !== null ? autolinker.link(feature.properties['pr_sm_h'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['home_vl'] !== null ? autolinker.link(feature.properties['home_vl'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['englsh_'] !== null ? autolinker.link(feature.properties['englsh_'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['pr_l_HS'] !== null ? autolinker.link(feature.properties['pr_l_HS'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['pr_blck'] !== null ? autolinker.link(feature.properties['pr_blck'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['per_NA'] !== null ? autolinker.link(feature.properties['per_NA'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_Med_HH_income_10_0(feature) {
+            if (feature.properties['md_hhnc'] >= 20085.000000 && feature.properties['md_hhnc'] <= 51101.000000 ) {
+                return {
+                pane: 'pane_Med_HH_income_10',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(166,97,26,1.0)',
+                interactive: false,
+            }
+            }
+            if (feature.properties['md_hhnc'] >= 51101.000000 && feature.properties['md_hhnc'] <= 70313.000000 ) {
+                return {
+                pane: 'pane_Med_HH_income_10',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(223,194,125,1.0)',
+                interactive: false,
+            }
+            }
+            if (feature.properties['md_hhnc'] >= 70313.000000 && feature.properties['md_hhnc'] <= 91189.000000 ) {
+                return {
+                pane: 'pane_Med_HH_income_10',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(245,245,245,1.0)',
+                interactive: false,
+            }
+            }
+            if (feature.properties['md_hhnc'] >= 91189.000000 && feature.properties['md_hhnc'] <= 118102.000000 ) {
+                return {
+                pane: 'pane_Med_HH_income_10',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(128,205,193,1.0)',
+                interactive: false,
+            }
+            }
+            if (feature.properties['md_hhnc'] >= 118102.000000 && feature.properties['md_hhnc'] <= 203194.000000 ) {
+                return {
+                pane: 'pane_Med_HH_income_10',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(1,133,113,1.0)',
+                interactive: false,
+            }
+            }
+        }
+        map.createPane('pane_Med_HH_income_10');
+        map.getPane('pane_Med_HH_income_10').style.zIndex = 410;
+        map.getPane('pane_Med_HH_income_10').style['mix-blend-mode'] = 'normal';
+        var layer_Med_HH_income_10 = new L.geoJson(json_Med_HH_income_10, {
+            attribution: '',
+            interactive: false,
+            dataVar: 'json_Med_HH_income_10',
+            layerName: 'layer_Med_HH_income_10',
+            pane: 'pane_Med_HH_income_10',
+            onEachFeature: pop_Med_HH_income_10,
+            style: style_Med_HH_income_10_0,
+        });
+        bounds_group.addLayer(layer_Med_HH_income_10);
+        map.addLayer(layer_Med_HH_income_10);
+        function pop_Percent_Asian_11(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['pop'] !== null ? autolinker.link(feature.properties['pop'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['md_HH_inc'] !== null ? autolinker.link(feature.properties['md_HH_inc'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['per_wht'] !== null ? autolinker.link(feature.properties['per_wht'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['per_hsp'] !== null ? autolinker.link(feature.properties['per_hsp'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['per_own_oc'] !== null ? autolinker.link(feature.properties['per_own_oc'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['per_asian'] !== null ? autolinker.link(feature.properties['per_asian'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['per_no_Veh'] !== null ? autolinker.link(feature.properties['per_no_Veh'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['per_unempl'] !== null ? autolinker.link(feature.properties['per_unempl'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['per_uninsu'] !== null ? autolinker.link(feature.properties['per_uninsu'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['per_same_u'] !== null ? autolinker.link(feature.properties['per_same_u'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['home_val'] !== null ? autolinker.link(feature.properties['home_val'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['per_less_e'] !== null ? autolinker.link(feature.properties['per_less_e'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['per_less_H'] !== null ? autolinker.link(feature.properties['per_less_H'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['per_blck'] !== null ? autolinker.link(feature.properties['per_blck'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['per_NatAm'] !== null ? autolinker.link(feature.properties['per_NatAm'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_Percent_Asian_11_0(feature) {
+            if (feature.properties['per_asian'] >= 0.000000 && feature.properties['per_asian'] <= 0.013132 ) {
+                return {
+                pane: 'pane_Percent_Asian_11',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(166,97,26,1.0)',
+                interactive: false,
+            }
+            }
+            if (feature.properties['per_asian'] >= 0.013132 && feature.properties['per_asian'] <= 0.032623 ) {
+                return {
+                pane: 'pane_Percent_Asian_11',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(223,194,125,1.0)',
+                interactive: false,
+            }
+            }
+            if (feature.properties['per_asian'] >= 0.032623 && feature.properties['per_asian'] <= 0.060564 ) {
+                return {
+                pane: 'pane_Percent_Asian_11',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(245,245,245,1.0)',
+                interactive: false,
+            }
+            }
+            if (feature.properties['per_asian'] >= 0.060564 && feature.properties['per_asian'] <= 0.114794 ) {
+                return {
+                pane: 'pane_Percent_Asian_11',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(128,205,193,1.0)',
+                interactive: false,
+            }
+            }
+            if (feature.properties['per_asian'] >= 0.114794 && feature.properties['per_asian'] <= 0.213546 ) {
+                return {
+                pane: 'pane_Percent_Asian_11',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(1,133,113,1.0)',
+                interactive: false,
+            }
+            }
+        }
+        map.createPane('pane_Percent_Asian_11');
+        map.getPane('pane_Percent_Asian_11').style.zIndex = 411;
+        map.getPane('pane_Percent_Asian_11').style['mix-blend-mode'] = 'normal';
+        var layer_Percent_Asian_11 = new L.geoJson(json_Percent_Asian_11, {
+            attribution: '',
+            interactive: false,
+            dataVar: 'json_Percent_Asian_11',
+            layerName: 'layer_Percent_Asian_11',
+            pane: 'pane_Percent_Asian_11',
+            onEachFeature: pop_Percent_Asian_11,
+            style: style_Percent_Asian_11_0,
+        });
+        bounds_group.addLayer(layer_Percent_Asian_11);
+        map.addLayer(layer_Percent_Asian_11);
+        function pop_Percent_Native_Am_12(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['pop'] !== null ? autolinker.link(feature.properties['pop'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['md_HH_inc'] !== null ? autolinker.link(feature.properties['md_HH_inc'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['per_wht'] !== null ? autolinker.link(feature.properties['per_wht'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['per_hsp'] !== null ? autolinker.link(feature.properties['per_hsp'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['per_own_oc'] !== null ? autolinker.link(feature.properties['per_own_oc'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['per_asian'] !== null ? autolinker.link(feature.properties['per_asian'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['per_no_Veh'] !== null ? autolinker.link(feature.properties['per_no_Veh'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['per_unempl'] !== null ? autolinker.link(feature.properties['per_unempl'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['per_uninsu'] !== null ? autolinker.link(feature.properties['per_uninsu'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['per_same_u'] !== null ? autolinker.link(feature.properties['per_same_u'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['home_val'] !== null ? autolinker.link(feature.properties['home_val'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['per_less_e'] !== null ? autolinker.link(feature.properties['per_less_e'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['per_less_H'] !== null ? autolinker.link(feature.properties['per_less_H'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['per_blck'] !== null ? autolinker.link(feature.properties['per_blck'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['per_NatAm'] !== null ? autolinker.link(feature.properties['per_NatAm'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_Percent_Native_Am_12_0(feature) {
+            if (feature.properties['per_NatAm'] >= 0.000000 && feature.properties['per_NatAm'] <= 0.010905 ) {
+                return {
+                pane: 'pane_Percent_Native_Am_12',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(166,97,26,1.0)',
+                interactive: false,
+            }
+            }
+            if (feature.properties['per_NatAm'] >= 0.010905 && feature.properties['per_NatAm'] <= 0.035894 ) {
+                return {
+                pane: 'pane_Percent_Native_Am_12',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(223,194,125,1.0)',
+                interactive: false,
+            }
+            }
+            if (feature.properties['per_NatAm'] >= 0.035894 && feature.properties['per_NatAm'] <= 0.090592 ) {
+                return {
+                pane: 'pane_Percent_Native_Am_12',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(245,245,245,1.0)',
+                interactive: false,
+            }
+            }
+            if (feature.properties['per_NatAm'] >= 0.090592 && feature.properties['per_NatAm'] <= 0.371957 ) {
+                return {
+                pane: 'pane_Percent_Native_Am_12',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(128,205,193,1.0)',
+                interactive: false,
+            }
+            }
+            if (feature.properties['per_NatAm'] >= 0.371957 && feature.properties['per_NatAm'] <= 0.956674 ) {
+                return {
+                pane: 'pane_Percent_Native_Am_12',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(1,133,113,1.0)',
+                interactive: false,
+            }
+            }
+        }
+        map.createPane('pane_Percent_Native_Am_12');
+        map.getPane('pane_Percent_Native_Am_12').style.zIndex = 412;
+        map.getPane('pane_Percent_Native_Am_12').style['mix-blend-mode'] = 'normal';
+        var layer_Percent_Native_Am_12 = new L.geoJson(json_Percent_Native_Am_12, {
+            attribution: '',
+            interactive: false,
+            dataVar: 'json_Percent_Native_Am_12',
+            layerName: 'layer_Percent_Native_Am_12',
+            pane: 'pane_Percent_Native_Am_12',
+            onEachFeature: pop_Percent_Native_Am_12,
+            style: style_Percent_Native_Am_12_0,
+        });
+        bounds_group.addLayer(layer_Percent_Native_Am_12);
+        map.addLayer(layer_Percent_Native_Am_12);
+        function pop_Percent_Black_13(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['pop'] !== null ? autolinker.link(feature.properties['pop'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['md_HH_inc'] !== null ? autolinker.link(feature.properties['md_HH_inc'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['per_wht'] !== null ? autolinker.link(feature.properties['per_wht'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['per_hsp'] !== null ? autolinker.link(feature.properties['per_hsp'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['per_own_oc'] !== null ? autolinker.link(feature.properties['per_own_oc'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['per_asian'] !== null ? autolinker.link(feature.properties['per_asian'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['per_no_Veh'] !== null ? autolinker.link(feature.properties['per_no_Veh'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['per_unempl'] !== null ? autolinker.link(feature.properties['per_unempl'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['per_uninsu'] !== null ? autolinker.link(feature.properties['per_uninsu'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['per_same_u'] !== null ? autolinker.link(feature.properties['per_same_u'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['home_val'] !== null ? autolinker.link(feature.properties['home_val'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['per_less_e'] !== null ? autolinker.link(feature.properties['per_less_e'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['per_less_H'] !== null ? autolinker.link(feature.properties['per_less_H'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['per_blck'] !== null ? autolinker.link(feature.properties['per_blck'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['per_NatAm'] !== null ? autolinker.link(feature.properties['per_NatAm'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_Percent_Black_13_0(feature) {
+            if (feature.properties['per_blck'] >= 0.000000 && feature.properties['per_blck'] <= 0.008142 ) {
+                return {
+                pane: 'pane_Percent_Black_13',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(166,97,26,1.0)',
+                interactive: false,
+            }
+            }
+            if (feature.properties['per_blck'] >= 0.008142 && feature.properties['per_blck'] <= 0.023634 ) {
+                return {
+                pane: 'pane_Percent_Black_13',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(223,194,125,1.0)',
+                interactive: false,
+            }
+            }
+            if (feature.properties['per_blck'] >= 0.023634 && feature.properties['per_blck'] <= 0.049573 ) {
+                return {
+                pane: 'pane_Percent_Black_13',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(245,245,245,1.0)',
+                interactive: false,
+            }
+            }
+            if (feature.properties['per_blck'] >= 0.049573 && feature.properties['per_blck'] <= 0.101238 ) {
+                return {
+                pane: 'pane_Percent_Black_13',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(128,205,193,1.0)',
+                interactive: false,
+            }
+            }
+            if (feature.properties['per_blck'] >= 0.101238 && feature.properties['per_blck'] <= 0.155531 ) {
+                return {
+                pane: 'pane_Percent_Black_13',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(1,133,113,1.0)',
+                interactive: false,
+            }
+            }
+        }
+        map.createPane('pane_Percent_Black_13');
+        map.getPane('pane_Percent_Black_13').style.zIndex = 413;
+        map.getPane('pane_Percent_Black_13').style['mix-blend-mode'] = 'normal';
+        var layer_Percent_Black_13 = new L.geoJson(json_Percent_Black_13, {
+            attribution: '',
+            interactive: false,
+            dataVar: 'json_Percent_Black_13',
+            layerName: 'layer_Percent_Black_13',
+            pane: 'pane_Percent_Black_13',
+            onEachFeature: pop_Percent_Black_13,
+            style: style_Percent_Black_13_0,
+        });
+        bounds_group.addLayer(layer_Percent_Black_13);
+        map.addLayer(layer_Percent_Black_13);
+        function pop_Percent_Hispanic_14(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['pop'] !== null ? autolinker.link(feature.properties['pop'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['md_HH_inc'] !== null ? autolinker.link(feature.properties['md_HH_inc'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['per_wht'] !== null ? autolinker.link(feature.properties['per_wht'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['per_hsp'] !== null ? autolinker.link(feature.properties['per_hsp'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['per_own_oc'] !== null ? autolinker.link(feature.properties['per_own_oc'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['per_asian'] !== null ? autolinker.link(feature.properties['per_asian'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['per_no_Veh'] !== null ? autolinker.link(feature.properties['per_no_Veh'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['per_unempl'] !== null ? autolinker.link(feature.properties['per_unempl'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['per_uninsu'] !== null ? autolinker.link(feature.properties['per_uninsu'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['per_same_u'] !== null ? autolinker.link(feature.properties['per_same_u'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['home_val'] !== null ? autolinker.link(feature.properties['home_val'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['per_less_e'] !== null ? autolinker.link(feature.properties['per_less_e'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['per_less_H'] !== null ? autolinker.link(feature.properties['per_less_H'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['per_blck'] !== null ? autolinker.link(feature.properties['per_blck'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['per_NatAm'] !== null ? autolinker.link(feature.properties['per_NatAm'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_Percent_Hispanic_14_0(feature) {
+            if (feature.properties['per_hsp'] >= 0.000000 && feature.properties['per_hsp'] <= 0.074779 ) {
+                return {
+                pane: 'pane_Percent_Hispanic_14',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(166,97,26,1.0)',
+                interactive: false,
+            }
+            }
+            if (feature.properties['per_hsp'] >= 0.074779 && feature.properties['per_hsp'] <= 0.146436 ) {
+                return {
+                pane: 'pane_Percent_Hispanic_14',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(223,194,125,1.0)',
+                interactive: false,
+            }
+            }
+            if (feature.properties['per_hsp'] >= 0.146436 && feature.properties['per_hsp'] <= 0.254910 ) {
+                return {
+                pane: 'pane_Percent_Hispanic_14',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(245,245,245,1.0)',
+                interactive: false,
+            }
+            }
+            if (feature.properties['per_hsp'] >= 0.254910 && feature.properties['per_hsp'] <= 0.408757 ) {
+                return {
+                pane: 'pane_Percent_Hispanic_14',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(128,205,193,1.0)',
+                interactive: false,
+            }
+            }
+            if (feature.properties['per_hsp'] >= 0.408757 && feature.properties['per_hsp'] <= 0.649310 ) {
+                return {
+                pane: 'pane_Percent_Hispanic_14',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(1,133,113,1.0)',
+                interactive: false,
+            }
+            }
+        }
+        map.createPane('pane_Percent_Hispanic_14');
+        map.getPane('pane_Percent_Hispanic_14').style.zIndex = 414;
+        map.getPane('pane_Percent_Hispanic_14').style['mix-blend-mode'] = 'normal';
+        var layer_Percent_Hispanic_14 = new L.geoJson(json_Percent_Hispanic_14, {
+            attribution: '',
+            interactive: false,
+            dataVar: 'json_Percent_Hispanic_14',
+            layerName: 'layer_Percent_Hispanic_14',
+            pane: 'pane_Percent_Hispanic_14',
+            onEachFeature: pop_Percent_Hispanic_14,
+            style: style_Percent_Hispanic_14_0,
+        });
+        bounds_group.addLayer(layer_Percent_Hispanic_14);
+        map.addLayer(layer_Percent_Hispanic_14);
+        function pop_Percent_White_15(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['pop'] !== null ? autolinker.link(feature.properties['pop'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['md_HH_inc'] !== null ? autolinker.link(feature.properties['md_HH_inc'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['per_wht'] !== null ? autolinker.link(feature.properties['per_wht'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['per_hsp'] !== null ? autolinker.link(feature.properties['per_hsp'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['per_own_oc'] !== null ? autolinker.link(feature.properties['per_own_oc'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['per_asian'] !== null ? autolinker.link(feature.properties['per_asian'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['per_no_Veh'] !== null ? autolinker.link(feature.properties['per_no_Veh'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['per_unempl'] !== null ? autolinker.link(feature.properties['per_unempl'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['per_uninsu'] !== null ? autolinker.link(feature.properties['per_uninsu'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['per_same_u'] !== null ? autolinker.link(feature.properties['per_same_u'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['home_val'] !== null ? autolinker.link(feature.properties['home_val'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['per_less_e'] !== null ? autolinker.link(feature.properties['per_less_e'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['per_less_H'] !== null ? autolinker.link(feature.properties['per_less_H'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['per_blck'] !== null ? autolinker.link(feature.properties['per_blck'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['per_NatAm'] !== null ? autolinker.link(feature.properties['per_NatAm'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_Percent_White_15_0(feature) {
+            if (feature.properties['per_wht'] >= 0.007433 && feature.properties['per_wht'] <= 0.425792 ) {
+                return {
+                pane: 'pane_Percent_White_15',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(166,97,26,1.0)',
+                interactive: false,
+            }
+            }
+            if (feature.properties['per_wht'] >= 0.425792 && feature.properties['per_wht'] <= 0.629099 ) {
+                return {
+                pane: 'pane_Percent_White_15',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(223,194,125,1.0)',
+                interactive: false,
+            }
+            }
+            if (feature.properties['per_wht'] >= 0.629099 && feature.properties['per_wht'] <= 0.773783 ) {
+                return {
+                pane: 'pane_Percent_White_15',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(245,245,245,1.0)',
+                interactive: false,
+            }
+            }
+            if (feature.properties['per_wht'] >= 0.773783 && feature.properties['per_wht'] <= 0.872933 ) {
+                return {
+                pane: 'pane_Percent_White_15',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(128,205,193,1.0)',
+                interactive: false,
+            }
+            }
+            if (feature.properties['per_wht'] >= 0.872933 && feature.properties['per_wht'] <= 1.000000 ) {
+                return {
+                pane: 'pane_Percent_White_15',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(1,133,113,1.0)',
+                interactive: false,
+            }
+            }
+        }
+        map.createPane('pane_Percent_White_15');
+        map.getPane('pane_Percent_White_15').style.zIndex = 415;
+        map.getPane('pane_Percent_White_15').style['mix-blend-mode'] = 'normal';
+        var layer_Percent_White_15 = new L.geoJson(json_Percent_White_15, {
+            attribution: '',
+            interactive: false,
+            dataVar: 'json_Percent_White_15',
+            layerName: 'layer_Percent_White_15',
+            pane: 'pane_Percent_White_15',
+            onEachFeature: pop_Percent_White_15,
+            style: style_Percent_White_15_0,
+        });
+        bounds_group.addLayer(layer_Percent_White_15);
+        map.addLayer(layer_Percent_White_15);
+        function pop_Pop_16(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['pop'] !== null ? autolinker.link(feature.properties['pop'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['md_HH_inc'] !== null ? autolinker.link(feature.properties['md_HH_inc'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['per_wht'] !== null ? autolinker.link(feature.properties['per_wht'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['per_hsp'] !== null ? autolinker.link(feature.properties['per_hsp'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['per_own_oc'] !== null ? autolinker.link(feature.properties['per_own_oc'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['per_asian'] !== null ? autolinker.link(feature.properties['per_asian'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['per_no_Veh'] !== null ? autolinker.link(feature.properties['per_no_Veh'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['per_unempl'] !== null ? autolinker.link(feature.properties['per_unempl'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['per_uninsu'] !== null ? autolinker.link(feature.properties['per_uninsu'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['per_same_u'] !== null ? autolinker.link(feature.properties['per_same_u'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['home_val'] !== null ? autolinker.link(feature.properties['home_val'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['per_less_e'] !== null ? autolinker.link(feature.properties['per_less_e'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['per_less_H'] !== null ? autolinker.link(feature.properties['per_less_H'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['per_blck'] !== null ? autolinker.link(feature.properties['per_blck'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['per_NatAm'] !== null ? autolinker.link(feature.properties['per_NatAm'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_Pop_16_0(feature) {
+            if (feature.properties['pop'] >= 0.000000 && feature.properties['pop'] <= 3668.000000 ) {
+                return {
+                pane: 'pane_Pop_16',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(166,97,26,1.0)',
+                interactive: false,
+            }
+            }
+            if (feature.properties['pop'] >= 3668.000000 && feature.properties['pop'] <= 5769.000000 ) {
+                return {
+                pane: 'pane_Pop_16',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(223,194,125,1.0)',
+                interactive: false,
+            }
+            }
+            if (feature.properties['pop'] >= 5769.000000 && feature.properties['pop'] <= 8627.000000 ) {
+                return {
+                pane: 'pane_Pop_16',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(245,245,245,1.0)',
+                interactive: false,
+            }
+            }
+            if (feature.properties['pop'] >= 8627.000000 && feature.properties['pop'] <= 13881.000000 ) {
+                return {
+                pane: 'pane_Pop_16',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(128,205,193,1.0)',
+                interactive: false,
+            }
+            }
+            if (feature.properties['pop'] >= 13881.000000 && feature.properties['pop'] <= 29636.000000 ) {
+                return {
+                pane: 'pane_Pop_16',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(1,133,113,1.0)',
+                interactive: false,
+            }
+            }
+        }
+        map.createPane('pane_Pop_16');
+        map.getPane('pane_Pop_16').style.zIndex = 416;
+        map.getPane('pane_Pop_16').style['mix-blend-mode'] = 'normal';
+        var layer_Pop_16 = new L.geoJson(json_Pop_16, {
+            attribution: '',
+            interactive: false,
+            dataVar: 'json_Pop_16',
+            layerName: 'layer_Pop_16',
+            pane: 'pane_Pop_16',
+            onEachFeature: pop_Pop_16,
+            style: style_Pop_16_0,
+        });
+        bounds_group.addLayer(layer_Pop_16);
+        map.addLayer(layer_Pop_16);
+        var baseMaps = {};
+        L.control.layers(baseMaps,{'Pop<br /><table><tr><td style="text-align: center;"><img src="legend/Pop_16_036680.png" /></td><td>0 - 3668</td></tr><tr><td style="text-align: center;"><img src="legend/Pop_16_366857691.png" /></td><td>3668 - 5769</td></tr><tr><td style="text-align: center;"><img src="legend/Pop_16_576986272.png" /></td><td>5769 - 8627</td></tr><tr><td style="text-align: center;"><img src="legend/Pop_16_8627138813.png" /></td><td>8627 - 13881</td></tr><tr><td style="text-align: center;"><img src="legend/Pop_16_13881296364.png" /></td><td>13881 - 29636</td></tr></table>': layer_Pop_16,'Percent_White<br /><table><tr><td style="text-align: center;"><img src="legend/Percent_White_15_0010430.png" /></td><td>0.01 - 0.43</td></tr><tr><td style="text-align: center;"><img src="legend/Percent_White_15_0430631.png" /></td><td>0.43 - 0.63</td></tr><tr><td style="text-align: center;"><img src="legend/Percent_White_15_0630772.png" /></td><td>0.63 - 0.77</td></tr><tr><td style="text-align: center;"><img src="legend/Percent_White_15_0770873.png" /></td><td>0.77 - 0.87</td></tr><tr><td style="text-align: center;"><img src="legend/Percent_White_15_08714.png" /></td><td>0.87 - 1</td></tr></table>': layer_Percent_White_15,'Percent_Hispanic<br /><table><tr><td style="text-align: center;"><img src="legend/Percent_Hispanic_14_000750.png" /></td><td>0 - 0.075</td></tr><tr><td style="text-align: center;"><img src="legend/Percent_Hispanic_14_007501461.png" /></td><td>0.075 - 0.146</td></tr><tr><td style="text-align: center;"><img src="legend/Percent_Hispanic_14_014602552.png" /></td><td>0.146 - 0.255</td></tr><tr><td style="text-align: center;"><img src="legend/Percent_Hispanic_14_025504093.png" /></td><td>0.255 - 0.409</td></tr><tr><td style="text-align: center;"><img src="legend/Percent_Hispanic_14_040906494.png" /></td><td>0.409 - 0.649</td></tr></table>': layer_Percent_Hispanic_14,'Percent_Black<br /><table><tr><td style="text-align: center;"><img src="legend/Percent_Black_13_0000810.png" /></td><td>0 - 0.0081</td></tr><tr><td style="text-align: center;"><img src="legend/Percent_Black_13_00081002361.png" /></td><td>0.0081 - 0.0236</td></tr><tr><td style="text-align: center;"><img src="legend/Percent_Black_13_00236004962.png" /></td><td>0.0236 - 0.0496</td></tr><tr><td style="text-align: center;"><img src="legend/Percent_Black_13_00496010123.png" /></td><td>0.0496 - 0.1012</td></tr><tr><td style="text-align: center;"><img src="legend/Percent_Black_13_01012015554.png" /></td><td>0.1012 - 0.1555</td></tr></table>': layer_Percent_Black_13,'Percent_Native_Am<br /><table><tr><td style="text-align: center;"><img src="legend/Percent_Native_Am_12_000110.png" /></td><td>0 - 0.011</td></tr><tr><td style="text-align: center;"><img src="legend/Percent_Native_Am_12_001100361.png" /></td><td>0.011 - 0.036</td></tr><tr><td style="text-align: center;"><img src="legend/Percent_Native_Am_12_003600912.png" /></td><td>0.036 - 0.091</td></tr><tr><td style="text-align: center;"><img src="legend/Percent_Native_Am_12_009103723.png" /></td><td>0.091 - 0.372</td></tr><tr><td style="text-align: center;"><img src="legend/Percent_Native_Am_12_037209574.png" /></td><td>0.372 - 0.957</td></tr></table>': layer_Percent_Native_Am_12,'Percent_Asian<br /><table><tr><td style="text-align: center;"><img src="legend/Percent_Asian_11_000130.png" /></td><td>0 - 0.013</td></tr><tr><td style="text-align: center;"><img src="legend/Percent_Asian_11_001300331.png" /></td><td>0.013 - 0.033</td></tr><tr><td style="text-align: center;"><img src="legend/Percent_Asian_11_003300612.png" /></td><td>0.033 - 0.061</td></tr><tr><td style="text-align: center;"><img src="legend/Percent_Asian_11_006101153.png" /></td><td>0.061 - 0.115</td></tr><tr><td style="text-align: center;"><img src="legend/Percent_Asian_11_011502144.png" /></td><td>0.115 - 0.214</td></tr></table>': layer_Percent_Asian_11,'Med_HH_income<br /><table><tr><td style="text-align: center;"><img src="legend/Med_HH_income_10_20085511010.png" /></td><td>20085 - 51101</td></tr><tr><td style="text-align: center;"><img src="legend/Med_HH_income_10_51101703131.png" /></td><td>51101 - 70313</td></tr><tr><td style="text-align: center;"><img src="legend/Med_HH_income_10_70313911892.png" /></td><td>70313 - 91189</td></tr><tr><td style="text-align: center;"><img src="legend/Med_HH_income_10_911891181023.png" /></td><td>91189 - 118102</td></tr><tr><td style="text-align: center;"><img src="legend/Med_HH_income_10_1181022031944.png" /></td><td>118102 - 203194</td></tr></table>': layer_Med_HH_income_10,'Med_Home_Value<br /><table><tr><td style="text-align: center;"><img src="legend/Med_Home_Value_9_356002165000.png" /></td><td>35600 - 216500</td></tr><tr><td style="text-align: center;"><img src="legend/Med_Home_Value_9_2165003163001.png" /></td><td>216500 - 316300</td></tr><tr><td style="text-align: center;"><img src="legend/Med_Home_Value_9_3163004830002.png" /></td><td>316300 - 483000</td></tr><tr><td style="text-align: center;"><img src="legend/Med_Home_Value_9_4830008225003.png" /></td><td>483000 - 822500</td></tr><tr><td style="text-align: center;"><img src="legend/Med_Home_Value_9_82250015614004.png" /></td><td>822500 - 1561400</td></tr></table>': layer_Med_Home_Value_9,'Percent_HH_12mo_sameunit<br /><table><tr><td style="text-align: center;"><img src="legend/Percent_HH_12mo_sameunit_8_021403350.png" /></td><td>0.214 - 0.335</td></tr><tr><td style="text-align: center;"><img src="legend/Percent_HH_12mo_sameunit_8_033506431.png" /></td><td>0.335 - 0.643</td></tr><tr><td style="text-align: center;"><img src="legend/Percent_HH_12mo_sameunit_8_064307742.png" /></td><td>0.643 - 0.774</td></tr><tr><td style="text-align: center;"><img src="legend/Percent_HH_12mo_sameunit_8_077408573.png" /></td><td>0.774 - 0.857</td></tr><tr><td style="text-align: center;"><img src="legend/Percent_HH_12mo_sameunit_8_085714.png" /></td><td>0.857 - 1</td></tr></table>': layer_Percent_HH_12mo_sameunit_8,'Percent_owner_occupied<br /><table><tr><td style="text-align: center;"><img src="legend/Percent_owner_occupied_7_00260.png" /></td><td>0 - 0.26</td></tr><tr><td style="text-align: center;"><img src="legend/Percent_owner_occupied_7_0260481.png" /></td><td>0.26 - 0.48</td></tr><tr><td style="text-align: center;"><img src="legend/Percent_owner_occupied_7_0480662.png" /></td><td>0.48 - 0.66</td></tr><tr><td style="text-align: center;"><img src="legend/Percent_owner_occupied_7_0660813.png" /></td><td>0.66 - 0.81</td></tr><tr><td style="text-align: center;"><img src="legend/Percent_owner_occupied_7_0810974.png" /></td><td>0.81 - 0.97</td></tr></table>': layer_Percent_owner_occupied_7,'Percent_no_vehicle<br /><table><tr><td style="text-align: center;"><img src="legend/Percent_no_vehicle_6_000120.png" /></td><td>0 - 0.012</td></tr><tr><td style="text-align: center;"><img src="legend/Percent_no_vehicle_6_001200291.png" /></td><td>0.012 - 0.029</td></tr><tr><td style="text-align: center;"><img src="legend/Percent_no_vehicle_6_002900572.png" /></td><td>0.029 - 0.057</td></tr><tr><td style="text-align: center;"><img src="legend/Percent_no_vehicle_6_005701163.png" /></td><td>0.057 - 0.116</td></tr><tr><td style="text-align: center;"><img src="legend/Percent_no_vehicle_6_011602264.png" /></td><td>0.116 - 0.226</td></tr></table>': layer_Percent_no_vehicle_6,'Percent_unemployed<br /><table><tr><td style="text-align: center;"><img src="legend/Percent_unemployed_5_000140.png" /></td><td>0 - 0.014</td></tr><tr><td style="text-align: center;"><img src="legend/Percent_unemployed_5_001400241.png" /></td><td>0.014 - 0.024</td></tr><tr><td style="text-align: center;"><img src="legend/Percent_unemployed_5_002400352.png" /></td><td>0.024 - 0.035</td></tr><tr><td style="text-align: center;"><img src="legend/Percent_unemployed_5_003500623.png" /></td><td>0.035 - 0.062</td></tr><tr><td style="text-align: center;"><img src="legend/Percent_unemployed_5_0062014.png" /></td><td>0.062 - 0.1</td></tr></table>': layer_Percent_unemployed_5,'Percent_uninsured<br /><table><tr><td style="text-align: center;"><img src="legend/Percent_uninsured_4_0000340.png" /></td><td>0 - 0.0034</td></tr><tr><td style="text-align: center;"><img src="legend/Percent_uninsured_4_00034000861.png" /></td><td>0.0034 - 0.0086</td></tr><tr><td style="text-align: center;"><img src="legend/Percent_uninsured_4_00086001492.png" /></td><td>0.0086 - 0.0149</td></tr><tr><td style="text-align: center;"><img src="legend/Percent_uninsured_4_00149002463.png" /></td><td>0.0149 - 0.0246</td></tr><tr><td style="text-align: center;"><img src="legend/Percent_uninsured_4_00246005284.png" /></td><td>0.0246 - 0.0528</td></tr></table>': layer_Percent_uninsured_4,'Percent_less_English_prof<br /><table><tr><td style="text-align: center;"><img src="legend/Percent_less_English_prof_3_000190.png" /></td><td>0 - 0.019</td></tr><tr><td style="text-align: center;"><img src="legend/Percent_less_English_prof_3_001900461.png" /></td><td>0.019 - 0.046</td></tr><tr><td style="text-align: center;"><img src="legend/Percent_less_English_prof_3_004600872.png" /></td><td>0.046 - 0.087</td></tr><tr><td style="text-align: center;"><img src="legend/Percent_less_English_prof_3_008701493.png" /></td><td>0.087 - 0.149</td></tr><tr><td style="text-align: center;"><img src="legend/Percent_less_English_prof_3_014902694.png" /></td><td>0.149 - 0.269</td></tr></table>': layer_Percent_less_English_prof_3,'Percent>25_less_HS_diploma<br /><table><tr><td style="text-align: center;"><img src="legend/Percent25_less_HS_diploma_2_000320.png" /></td><td>0 - 0.032</td></tr><tr><td style="text-align: center;"><img src="legend/Percent25_less_HS_diploma_2_003200661.png" /></td><td>0.032 - 0.066</td></tr><tr><td style="text-align: center;"><img src="legend/Percent25_less_HS_diploma_2_006601182.png" /></td><td>0.066 - 0.118</td></tr><tr><td style="text-align: center;"><img src="legend/Percent25_less_HS_diploma_2_011802653.png" /></td><td>0.118 - 0.265</td></tr><tr><td style="text-align: center;"><img src="legend/Percent25_less_HS_diploma_2_026506264.png" /></td><td>0.265 - 0.626</td></tr></table>': layer_Percent25_less_HS_diploma_2,'<img src="legend/Utah_acs_data_final_1.png" /> Utah_acs_data_final': layer_Utah_acs_data_final_1,"Positron (retina)": layer_Positronretina_0,}).addTo(map);
+        setBounds();
+        </script>
+    </body>
+</html>
